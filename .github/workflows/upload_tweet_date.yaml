@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  post-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Upload last_tweet_date artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: last_tweet_date
+          path: last_tweet_date.txt
