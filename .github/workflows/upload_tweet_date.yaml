@@ -1,3 +1,5 @@
+name: Upload Tweet Date
+
 on:
   workflow_dispatch:
 
@@ -6,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Upload last_tweet_date artifact
       - run: mkdir artifact
       - run: echo FEB 22, 2025 > artifact/last_tweet_date.txt
       - uses: actions/upload-artifact@v4
