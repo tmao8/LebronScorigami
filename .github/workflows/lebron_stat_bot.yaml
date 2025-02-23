@@ -21,12 +21,6 @@ jobs:
       - name: Install dependencies
         run: pip install tweepy nba-api
 
-      - name: Download last_tweet_date artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: last_tweet_date
-          path: ./
-
       - name: Run LeBron Stat Bot
         env:
           API_KEY: ${{ secrets.TWITTER_API_KEY }}
@@ -34,9 +28,3 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
         run: python3 tweet.py
-      
-      - name: Upload last_tweet_date artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: last_tweet_date
-          path: last_tweet_date.txt
