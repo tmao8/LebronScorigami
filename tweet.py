@@ -20,13 +20,13 @@ client = tweepy.Client(
 
 def get_last_tweet_date():
     try:
-        with open('last_tweet_date.txt', 'r') as f:
+        with open('artifact/last_tweet_date.txt', 'r') as f:
             return f.read()
     except FileNotFoundError:
         return None
 
 def save_last_tweet_date(date):
-    with open('last_tweet_date.txt', 'w') as f:
+    with open('artifact/last_tweet_date.txt', 'w') as f:
         f.write(date)
 
 # Function to fetch LeBron's latest game stats and compare with history
