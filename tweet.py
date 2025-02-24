@@ -24,15 +24,18 @@ custom_headers = {
     'Connection': 'keep-alive',
     'Cache-Control': 'max-age=0',
     'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'application/json, text/plain, */*',
     'Accept-Encoding': 'gzip, deflate, br',
     'Accept-Language': 'en-US,en;q=0.9',
+    'Origin': 'https://www.nba.com',
+    'Referer': 'https://www.nba.com/',
 }
 
 # Function to fetch LeBron's latest game stats and compare with history
 def get_lebron_stats():
-    logs = playergamelog.PlayerGameLog(player_id='2544', season=SeasonAll.all,  proxy='127.0.0.1:80', headers=custom_headers).get_data_frames()[0]
+    logs = playergamelog.PlayerGameLog(player_id='2544', season=SeasonAll.all, headers=custom_headers, timeout=100).get_data_frames()[0]
+    print(logs)
     latest_game = logs.iloc[0]
     points = latest_game['PTS']
     rebounds = latest_game['REB']
@@ -74,4 +77,5 @@ def check_and_tweet():
     client.create_tweet(text=tweet)
     update_repo_var.update_repo_var(stats['game_date'])
 
-check_and_tweet()
+# check_and_tweet()
+print(get_lebron_stats())
