@@ -2,7 +2,7 @@ import tweepy
 from nba_api.stats.endpoints import playergamelog
 from nba_api.stats.library.parameters import SeasonAll
 import os
-
+import update_repo_var
 
 # Twitter API credentials
 API_KEY = os.getenv('API_KEY')
@@ -18,20 +18,21 @@ client = tweepy.Client(
     access_token_secret=ACCESS_TOKEN_SECRET
 )
 
-def get_last_tweet_date():
-    try:
-        with open('artifact/last_tweet_date.txt', 'r') as f:
-            return f.read()
-    except FileNotFoundError:
-        return None
 
-def save_last_tweet_date(date):
-    with open('artifact/last_tweet_date.txt', 'w') as f:
-        f.write(date)
+custom_headers = {
+    'Host': 'stats.nba.com',
+    'Connection': 'keep-alive',
+    'Cache-Control': 'max-age=0',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'en-US,en;q=0.9',
+}
 
 # Function to fetch LeBron's latest game stats and compare with history
 def get_lebron_stats():
-    logs = playergamelog.PlayerGameLog(player_id='2544', season=SeasonAll.all).get_data_frames()[0]
+    logs = playergamelog.PlayerGameLog(player_id='2544', season=SeasonAll.all,  proxy='127.0.0.1:80', headers=custom_headers).get_data_frames()[0]
     latest_game = logs.iloc[0]
     points = latest_game['PTS']
     rebounds = latest_game['REB']
@@ -63,14 +64,14 @@ def get_lebron_stats():
 # Function to check stats and tweet
 def check_and_tweet():
     stats = get_lebron_stats()
-    if not stats or get_last_tweet_date() == stats['game_date']:
+    if not stats or os.getenv('LAST_TWEET_DATE') == stats['game_date']:
         return
     stat_line = f"{stats['points']}PTS {stats['rebounds']}REB {stats['assists']}AST"
     if stats['count'] >= 1:
         tweet = (f"LeBron James just recorded a stat line of {stat_line} for the {stats['count'] + 1}th time! He most recently achieved this stat line on {stats['most_recent']}🏀")
     else:
-        tweet = (f"LeBron James just achieved a new stat line: {stat_line}! 🏀 This is the first time ever! 🔥 #striveforgreatness🚀 #thekidfromakron👑 #jamesgang👑 #bronknows")
+        tweet = (f"LeBron James just achieved a new stat line: {stat_line}! 🏀 This is his first time ever! 🔥 #striveforgreatness🚀 #thekidfromakron👑 #jamesgang👑 #bronknows")
     client.create_tweet(text=tweet)
-    save_last_tweet_date(stats['game_date'])
+    update_repo_var.update_repo_var(stats['game_date'])
 
 check_and_tweet()

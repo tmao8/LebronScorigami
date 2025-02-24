@@ -27,4 +27,6 @@ jobs:
           API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          LAST_TWEET_DATE: ${{ variables.LAST_TWEET_DATE }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: python3 tweet.py
