@@ -70,8 +70,13 @@ def check_and_tweet():
     if not stats or os.getenv('LAST_TWEET_DATE') == stats['game_date']:
         return
     stat_line = f"{stats['points']}PTS {stats['rebounds']}REB {stats['assists']}AST"
+    end = "th"
+    if stats['count'] == 2:
+        end = 'nd'
+    elif stats['count'] == 3:
+        end = 'rd'
     if stats['count'] >= 1:
-        tweet = (f"LeBron James just recorded a stat line of {stat_line} for the {stats['count'] + 1}th time! He most recently achieved this stat line on {stats['most_recent']}🏀")
+        tweet = (f"LeBron James just recorded a stat line of {stat_line} for the {stats['count'] + 1}{end} time! He most recently achieved this stat line on {stats['most_recent']}🏀")
     else:
         tweet = (f"LeBron James just achieved a new stat line: {stat_line}! 🏀 This is his first time ever! 🔥 #striveforgreatness🚀 #thekidfromakron👑 #jamesgang👑 #bronknows")
     client.create_tweet(text=tweet)
