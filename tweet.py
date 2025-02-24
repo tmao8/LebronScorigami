@@ -77,5 +77,4 @@ def check_and_tweet():
     client.create_tweet(text=tweet)
     update_repo_var.update_repo_var(stats['game_date'])
 
-# check_and_tweet()
-print(get_lebron_stats())
+check_and_tweet()
