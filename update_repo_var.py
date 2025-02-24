@@ -2,7 +2,7 @@ import requests
 import os
 
 def update_repo_var(value):
-    # Define your variables
+    # Defined variables
     repo_owner = "tmao8"
     repo_name = "LebronScorigami"
     variable_name = "LAST_TWEET_DATE"
