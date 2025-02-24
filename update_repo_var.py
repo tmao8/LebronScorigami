@@ -28,5 +28,3 @@ def update_repo_var(value):
 
     if response.status_code == 204:
         print(f"Successfully updated variable '{variable_name}' to '{new_value}'")
-
-update_repo_var("FEB, 22, 2025")
