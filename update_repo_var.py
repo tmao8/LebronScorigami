@@ -14,7 +14,7 @@ def update_repo_var(value):
     GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
     # Headers, including the personal access token
     headers = {
-        "Authorization": "Bearer {GITHUB_TOKEN}",
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
     }
 
@@ -28,3 +28,6 @@ def update_repo_var(value):
 
     if response.status_code == 204:
         print(f"Successfully updated variable '{variable_name}' to '{new_value}'")
+    else:
+        print(f"Failed to update variable '{variable_name}'")
+        print(response.json())
