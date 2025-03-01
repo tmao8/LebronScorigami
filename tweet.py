@@ -79,9 +79,9 @@ def check_and_tweet():
     elif stats['count'] == 3:
         end = 'rd'
     if stats['count'] >= 1:
-        tweet = (f"LeBron James just recorded a stat line of {stat_line} for the {stats['count'] + 1}{end} time! He most recently achieved this stat line on {stats['most_recent']}🏀")
+        tweet = (f"No Scorigami. LeBron James just recorded a stat line of {stat_line} for the {stats['count'] + 1}{end} time! He most recently achieved this stat line on {stats['most_recent']}🏀")
     else:
-        tweet = (f"LeBron James just achieved a new stat line: {stat_line}! 🏀 This is his first time ever! 🔥 #striveforgreatness🚀 #thekidfromakron👑 #jamesgang👑 #bronknows")
+        tweet = (f"🚨 SCORIGAMI! 🚨 LeBron James just achieved a new stat line: {stat_line}! 🔥 #striveforgreatness🚀 #thekidfromakron👑 #jamesgang👑 #bronknows")
     client.create_tweet(text=tweet)
     update_repo_var.update_repo_var(stats['game_date'])
 
