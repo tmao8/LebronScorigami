@@ -68,6 +68,8 @@ def get_lebron_stats():
 def check_and_tweet():
     stats = get_lebron_stats()
     if not stats or os.getenv('LAST_TWEET_DATE') == stats['game_date']:
+        print(stats)
+        print(os.getenv('LAST_TWEET_DATE')
         print("No new updates")
         return
     stat_line = f"{stats['points']}PTS {stats['rebounds']}REB {stats['assists']}AST"
