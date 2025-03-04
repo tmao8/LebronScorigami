@@ -74,9 +74,9 @@ def check_and_tweet():
         return
     stat_line = f"{stats['points']}PTS {stats['rebounds']}REB {stats['assists']}AST"
     end = "th"
-    if stats['count'] == 2:
+    if stats['count'] == 1:
         end = 'nd'
-    elif stats['count'] == 3:
+    elif stats['count'] == 2:
         end = 'rd'
     if stats['count'] >= 1:
         tweet = (f"No Scorigami. LeBron James just recorded a stat line of {stat_line} for the {stats['count'] + 1}{end} time! He most recently achieved this stat line on {stats['most_recent']}🏀")
@@ -85,4 +85,5 @@ def check_and_tweet():
     client.create_tweet(text=tweet)
     update_repo_var.update_repo_var(stats['game_date'])
 
-check_and_tweet()
+# check_and_tweet()
+get_lebron_stats()
