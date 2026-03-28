@@ -2,7 +2,7 @@ name: LeBron Stat Bot
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/10 0-7 * * *'
   workflow_dispatch:
 
 jobs:
