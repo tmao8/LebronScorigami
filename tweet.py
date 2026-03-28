@@ -6,7 +6,7 @@ import random
 import update_repo_var
 
 PROXY_LIST = os.getenv("PROXY_LIST", "").split(",")
-PROXY_LIST = [p.strip() for p in PROXY_LIST if p.strip()]
+PROXY_LIST = [p.strip().strip('"') for p in PROXY_LIST if p.strip()]
 
 def get_proxy():
     return random.choice(PROXY_LIST) if PROXY_LIST else None
@@ -26,22 +26,9 @@ client = tweepy.Client(
 )
 
 
-custom_headers = {
-    'Host': 'stats.nba.com',
-    'Connection': 'keep-alive',
-    'Cache-Control': 'max-age=0',
-    'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Accept': 'application/json, text/plain, */*',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Origin': 'https://www.nba.com',
-    'Referer': 'https://www.nba.com/',
-}
-
 # Function to fetch LeBron's latest game stats and compare with history
 def get_lebron_stats():
-    logs = playergamelog.PlayerGameLog(player_id='2544', season=SeasonAll.all, headers=custom_headers, timeout=100, proxy=get_proxy()).get_data_frames()[0]
+    logs = playergamelog.PlayerGameLog(player_id='2544', season=SeasonAll.all, timeout=100, proxy=get_proxy()).get_data_frames()[0]
     print(logs)
     latest_game = logs.iloc[0]
     points = latest_game['PTS']
