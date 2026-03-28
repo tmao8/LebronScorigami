@@ -2,7 +2,14 @@ import tweepy
 from nba_api.stats.endpoints import playergamelog
 from nba_api.stats.library.parameters import SeasonAll
 import os
+import random
 import update_repo_var
+
+PROXY_LIST = os.getenv("PROXY_LIST", "").split(",")
+PROXY_LIST = [p.strip() for p in PROXY_LIST if p.strip()]
+
+def get_proxy():
+    return random.choice(PROXY_LIST) if PROXY_LIST else None
 
 # Twitter API credentials
 API_KEY = os.getenv('API_KEY')
@@ -34,7 +41,7 @@ custom_headers = {
 
 # Function to fetch LeBron's latest game stats and compare with history
 def get_lebron_stats():
-    logs = playergamelog.PlayerGameLog(player_id='2544', season=SeasonAll.all, headers=custom_headers, timeout=100).get_data_frames()[0]
+    logs = playergamelog.PlayerGameLog(player_id='2544', season=SeasonAll.all, headers=custom_headers, timeout=100, proxy=get_proxy()).get_data_frames()[0]
     print(logs)
     latest_game = logs.iloc[0]
     points = latest_game['PTS']

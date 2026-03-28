@@ -7,7 +7,7 @@ on:
 
 jobs:
   post-stats:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
@@ -29,4 +29,5 @@ jobs:
           ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
           LAST_TWEET_DATE: ${{ vars.LAST_TWEET_DATE }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          PROXY_LIST: ${{ secrets.PROXY_LIST }}
         run: python3 tweet.py
