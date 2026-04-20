@@ -117,7 +117,7 @@ def check_and_tweet():
 
     for attempt in range(3):
         try:
-            client.create_tweet(text=tweet)
+            client.create_tweet(text=tweet, user_auth=False)
             update_repo_var.update_repo_var(stats['game_date'])
             break
         except Exception as e:
